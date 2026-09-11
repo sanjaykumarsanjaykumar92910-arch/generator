@@ -1,0 +1,249 @@
+/* Base Styles & Resets */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #000;
+    color: #fff;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.app-container {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    background-color: #11151c; /* Dark grid background simulation */
+    background-image: 
+      linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 30px 30px;
+    overflow: hidden;
+}
+
+/* --- Simulation Area (Left) --- */
+.simulation-area {
+    flex: 1;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sim-title {
+    margin-top: 20px;
+    font-size: 24px;
+    font-weight: 500;
+    color: #e0e0e0;
+    z-index: 10;
+}
+
+#physics-canvas {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 1;
+}
+
+.sim-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 2;
+    pointer-events: none; /* Let clicks pass to canvas */
+}
+
+/* Animations for CSS representations */
+@keyframes spin { 100% { transform: rotate(360deg); } }
+
+.wheel-magnet-assembly {
+    position: absolute;
+    top: 40%; left: 30%;
+    transform: translate(-50%, -50%);
+    width: 300px; height: 300px;
+}
+
+.wheel {
+    position: absolute;
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    border: 30px solid #a67c52; /* Wooden color */
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.5), 0 0 20px rgba(0,0,0,0.5);
+    animation: spin 2s linear infinite;
+}
+
+.wheel::before, .wheel::after { /* Spokes */
+    content: '';
+    position: absolute;
+    top: 50%; left: -30px; right: -30px;
+    height: 20px;
+    background-color: #8c6239;
+    transform: translateY(-50%);
+}
+.wheel::after { transform: translateY(-50%) rotate(90deg); }
+
+.magnet-bar {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    width: 250px; height: 60px;
+    background: #333;
+    border-radius: 5px;
+    z-index: 3;
+    animation: spin 2s linear infinite;
+}
+
+.magnet-bar .pole {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 32px;
+    font-weight: bold;
+    color: white;
+}
+.magnet-bar .south { background: linear-gradient(to bottom, #4a90e2, #1c5296); border-radius: 5px 0 0 5px;}
+.magnet-bar .north { background: linear-gradient(to bottom, #e24a4a, #961c1c); border-radius: 0 5px 5px 0;}
+
+.magnet-bar .gauge {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px; height: 80px;
+    background: #222;
+    border: 5px solid #ccc;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 10px rgba(0,0,0,0.8);
+    /* Counteract spin so text remains upright */
+    animation: spin 2s linear infinite reverse;
+}
+.gauge .value { font-size: 18px; font-weight: bold; }
+.gauge .unit { font-size: 10px; color: #aaa; }
+
+.lightbulb-container {
+    position: absolute;
+    top: 20%; left: 70%;
+    font-size: 80px;
+    color: #ffd700;
+    text-shadow: 0 0 40px #ff8c00, 0 0 80px #ff8c00;
+}
+
+.playback-controls {
+    position: absolute;
+    bottom: 20px;
+    display: flex;
+    gap: 10px;
+    z-index: 10;
+}
+
+.playback-controls button {
+    background: #2a2d35;
+    color: white;
+    border: 1px solid #444;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.playback-controls button.active { background: #3b82f6; border-color: #3b82f6; }
+
+/* --- Control Panel (Right) --- */
+.control-panel {
+    width: 320px;
+    background-color: #1e1e1e;
+    border-left: 1px solid #333;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+    z-index: 10;
+}
+
+.panel-title { font-size: 18px; font-weight: normal; margin-bottom: 20px; text-align: center; color: #ddd; }
+
+.control-group { margin-bottom: 15px; }
+.control-group h3 { font-size: 14px; color: #ccc; margin-bottom: 15px; font-weight: 600; }
+hr { border: 0; border-top: 1px solid #333; margin: 15px 0; }
+
+.control-row { display: flex; align-items: center; margin-bottom: 10px; font-size: 14px; }
+.slider-row { justify-content: space-between; margin-bottom: 5px; }
+.space-between { justify-content: space-between; }
+
+/* Custom Sliders */
+input[type=range] {
+    flex: 1;
+    margin: 0 10px;
+    -webkit-appearance: none;
+    background: transparent;
+}
+input[type=range]::-webkit-slider-runnable-track {
+    width: 100%; height: 6px;
+    background: #3b82f6; border-radius: 3px;
+}
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 16px; width: 16px;
+    border-radius: 50%;
+    background: #fff;
+    cursor: pointer;
+    margin-top: -5px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+
+.arrow-btn {
+    background: #333; border: none; color: white;
+    width: 24px; height: 24px; border-radius: 4px; cursor: pointer;
+}
+.arrow-btn:hover { background: #444; }
+
+.slider-labels {
+    display: flex; justify-content: space-between;
+    font-size: 11px; color: #888; margin-bottom: 15px;
+}
+
+/* Custom Checkboxes */
+.checkbox-row input[type="checkbox"] {
+    appearance: none; width: 18px; height: 18px;
+    background: #333; border-radius: 3px;
+    display: inline-flex; justify-content: center; align-items: center;
+    margin-right: 10px; cursor: pointer; vertical-align: middle;
+}
+.checkbox-row input[type="checkbox"]:checked { background: #3b82f6; }
+.checkbox-row input[type="checkbox"]:checked::after { content: '\2714'; color: white; font-size: 12px; }
+
+/* Toggles & Steppers */
+.toggle-group { display: flex; background: #111; border-radius: 6px; overflow: hidden; border: 1px solid #333; }
+.icon-btn {
+    background: transparent; border: none; color: #888;
+    padding: 6px 15px; cursor: pointer; font-size: 16px;
+}
+.icon-btn.active { background: #2a3b5c; color: #60a5fa; }
+.indicator-row { justify-content: space-between; }
+
+.stepper-row { justify-content: space-between; }
+.stepper { display: flex; align-items: center; background: #222; border-radius: 4px; padding: 2px; }
+.stepper span { width: 30px; text-align: center; }
+
+.icon-faded { color: #555; font-size: 18px; }
+
+.reset-container { margin-top: auto; display: flex; justify-content: flex-end; }
+.btn-reset {
+    background: transparent; border: none; color: #888;
+    cursor: pointer; font-size: 12px; text-align: center;
+}
+.btn-reset i { font-size: 20px; margin-bottom: 5px; }
+.btn-reset:hover { color: #fff; }
