@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hydroelectric Generation Simulator</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Main Simulation Area -->
+        <main class="simulation-area">
+            <h1 class="sim-title">Hydroelectric Generation Simulator</h1>
+            
+            <!-- Physics Simulation Canvas (Placeholder for WebGL/Canvas 2D) -->
+            <canvas id="physics-canvas"></canvas>
+
+            <!-- CSS/SVG Overlay for static or simple animated UI elements -->
+            <div class="sim-overlay">
+                <!-- Faucet Placeholder -->
+                <div class="faucet-container">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Gnome-stock_person.svg/200px-Gnome-stock_person.svg.png" alt="Faucet" class="faucet-img" style="opacity: 0.1;"> 
+                    <!-- Replace src with actual faucet SVG -->
+                </div>
+
+                <!-- Spinning Wheel & Magnet Assembly -->
+                <div class="wheel-magnet-assembly">
+                    <div class="wheel"></div>
+                    <div class="magnet-bar">
+                        <div class="pole south">S</div>
+                        <div class="gauge">
+                            <span class="value">120.0</span>
+                            <span class="unit">RPM</span>
+                        </div>
+                        <div class="pole north">N</div>
+                    </div>
+                </div>
+
+                <!-- Lightbulb -->
+                <div class="lightbulb-container">
+                    <i class="fa-solid fa-lightbulb glowing"></i>
+                </div>
+            </div>
+
+            <!-- Playback Controls -->
+            <div class="playback-controls">
+                <button class="btn-pause"><i class="fa-solid fa-pause"></i> Pause</button>
+                <button class="btn-play active"><i class="fa-solid fa-play"></i> Play</button>
+            </div>
+        </main>
+
+        <!-- Right Control Panel -->
+        <aside class="control-panel">
+            <h2 class="panel-title">Control Panel</h2>
+            
+            <!-- Bar Magnet Section -->
+            <section class="control-group">
+                <h3>Bar Magnet</h3>
+                <div class="control-row slider-row">
+                    <label>Strength</label>
+                    <span id="strength-val">75%</span>
+                </div>
+                <div class="control-row">
+                    <button class="arrow-btn">&lt;</button>
+                    <input type="range" id="strength-slider" min="0" max="100" value="75">
+                    <button class="arrow-btn">&gt;</button>
+                </div>
+                <div class="slider-labels">
+                    <span>0%</span>
+                    <span>100%</span>
+                </div>
+                <div class="control-row checkbox-row">
+                    <input type="checkbox" id="mag-field" checked>
+                    <label for="mag-field">Magnetic Field (B)</label>
+                </div>
+            </section>
+
+            <hr>
+
+            <!-- Pickup Coil Section -->
+            <section class="control-group">
+                <h3>Pickup Coil</h3>
+                
+                <div class="control-row indicator-row">
+                    <label>Indicator</label>
+                    <div class="toggle-group">
+                        <button class="icon-btn active"><i class="fa-regular fa-lightbulb"></i></button>
+                        <button class="icon-btn"><i class="fa-solid fa-wave-square"></i></button>
+                    </div>
+                </div>
+
+                <div class="control-row stepper-row">
+                    <label>Loops</label>
+                    <div class="stepper">
+                        <button class="arrow-btn">&lt;</button>
+                        <span id="loop-count">2</span>
+                        <button class="arrow-btn">&gt;</button>
+                    </div>
+                </div>
+
+                <div class="control-row slider-row">
+                    <label>Loop Area</label>
+                    <span id="area-val">50%</span>
+                </div>
+                <div class="control-row">
+                    <button class="arrow-btn">&lt;</button>
+                    <input type="range" id="area-slider" min="20" max="100" value="50">
+                    <button class="arrow-btn">&gt;</button>
+                </div>
+                <div class="slider-labels">
+                    <span>50%</span>
+                    <span>20%-100%</span>
+                </div>
+
+                <div class="control-row checkbox-row">
+                    <input type="checkbox" id="electrons" checked>
+                    <label for="electrons">Electrons</label>
+                </div>
+            </section>
+
+            <hr>
+
+            <!-- Display Toggles -->
+            <section class="control-group">
+                <h3>Display Toggles</h3>
+                <div class="control-row checkbox-row space-between">
+                    <div>
+                        <input type="checkbox" id="compass" checked>
+                        <label for="compass">Compass</label>
+                    </div>
+                    <i class="fa-regular fa-compass icon-faded"></i>
+                </div>
+                <div class="control-row checkbox-row space-between">
+                    <div>
+                        <input type="checkbox" id="field-meter" checked>
+                        <label for="field-meter">Field Meter</label>
+                    </div>
+                    <i class="fa-solid fa-satellite-dish icon-faded"></i>
+                </div>
+            </section>
+
+            <div class="reset-container">
+                <button class="btn-reset">
+                    <i class="fa-solid fa-rotate-right"></i><br>Reset
+                </button>
+            </div>
+        </aside>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
